@@ -4,11 +4,13 @@ const db = require("../models")
 const User = db.user
 
 verifyToken = (req, res, next) => {
-	let token = req.session.token
+	let token = req.headers.jwttoken
 
 	if (!token) {
 		return res.status(403).send({
 			message: "No token provided!",
+            token: req.headers.jwttoken,
+            req: JSON.stringify(req.headers)
 		})
 	}
 
@@ -36,6 +38,7 @@ isAdmin = async (req, res, next) => {
 
 		return res.status(403).send({
 			message: "Require Admin Role!",
+            status: 403
 		})
 	} catch (error) {
 		return res.status(500).send({
@@ -57,6 +60,7 @@ isModerator = async (req, res, next) => {
 
 		return res.status(403).send({
 			message: "Require Moderator Role!",
+            status: 403
 		})
 	} catch (error) {
 		return res.status(500).send({

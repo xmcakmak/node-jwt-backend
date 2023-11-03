@@ -39,13 +39,14 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
+    console.log('SIGN IN ISTEK GELDI');
   try {
     const user = await User.findOne({
       where: {
-        username: req.body.username,
+        email: req.body.email,
       },
     });
-
+    console.log('TRY GIRDI');
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
@@ -75,13 +76,14 @@ exports.signin = async (req, res) => {
       authorities.push("ROLE_" + roles[i].name.toUpperCase());
     }
 
-    req.session.token = token;
+    //req.session.token = token;
 
     return res.status(200).send({
       id: user.id,
       username: user.username,
       email: user.email,
       roles: authorities,
+      token: token
     });
   } catch (error) {
     return res.status(500).send({ message: error.message });

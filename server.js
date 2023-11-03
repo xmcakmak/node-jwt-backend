@@ -1,6 +1,5 @@
 const express = require("express")
 const cors = require("cors")
-const cookieSession = require("cookie-session")
 require('dotenv').config();
 
 console.log(process.env.DB_USERNAME);
@@ -13,14 +12,6 @@ app.use(cors())
 app.use(express.json())
 
 app.use(express.urlencoded({ extended: true }))
-
-app.use(
-	cookieSession({
-		name: "resortcode-session",
-		keys: ["COOKIE_SECRET"],
-		httpOnly: true,
-	}),
-)
 
 // simple route
 app.get("/", (req, res) => {
